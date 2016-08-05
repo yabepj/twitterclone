@@ -19,7 +19,7 @@ public class ViewTweetsServlet extends HttpServlet
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	response.setContentType("text/html");
+    	response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         
     	Connection c = null;
@@ -30,10 +30,10 @@ public class ViewTweetsServlet extends HttpServlet
           System.err.println( e.getClass().getName() + ": " + e.getMessage() );
           System.exit(0);
         }
-        response.getWriter().println("<h1>Data Base Opened!</h1>");
-    	
-        
-        response.getWriter().println("<h1>"+getClass().getName()+"</h1>");
-        response.getWriter().println("session=" + request.getSession(true).getId());
+        response.getWriter().print("[");
+        response.getWriter().println("{ 'message0': 'Data Base Opened!' }");
+    	response.getWriter().println(",{ 'class': '"+getClass().getName()+"' }");
+        response.getWriter().println(",{ 'session': '" + request.getSession(true).getId() + "'}");
+        response.getWriter().print("]");
     }
 }
