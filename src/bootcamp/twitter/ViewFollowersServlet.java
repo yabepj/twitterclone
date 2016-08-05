@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 public class ViewFollowersServlet extends HttpServlet
 {
     private String greeting="Twitter Clone!";
@@ -31,12 +34,14 @@ public class ViewFollowersServlet extends HttpServlet
           System.exit(0);
         }
        
-        response.getWriter().print("[");
-        response.getWriter().println("{ 'message0': 'Data Base Opened!' }");
-    	
+        JSONObject obj = new JSONObject();
+        obj.put("message", "database opened!");
+        obj.put("class", getClass().getName());
+        obj.put("session", request.getSession(true).getId());
         
-        response.getWriter().println(",{ 'class': '"+getClass().getName()+"' }");
-        response.getWriter().println(",{ 'session': '" + request.getSession(true).getId() + "'}");
-        response.getWriter().print("]");
+        JSONArray list = new JSONArray();
+        list.add(obj);
+        
+        response.getWriter().print(list.toJSONString());
     }
 }
