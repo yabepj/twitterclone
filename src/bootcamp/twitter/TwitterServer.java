@@ -12,6 +12,8 @@ import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 public class TwitterServer extends AbstractHandler {
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
@@ -24,7 +26,7 @@ public class TwitterServer extends AbstractHandler {
 
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(8090);
-		//server.setHandler(new SimpleServer());
+		server.setHandler(new TwitterServer());
 
 		// 1.Creating the resource handler
 		ResourceHandler resourceHandler = new ResourceHandler();
@@ -40,7 +42,17 @@ public class TwitterServer extends AbstractHandler {
 
 		// 5.Attaching Handlers
 		contextHandler.setHandler(resourceHandler);
+		
 		server.setHandler(contextHandler);
+		
+		
+		
+//		 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+//	     context.setContextPath("/servlet");
+//	     server.setHandler(context);
+//	 
+//	     context.addServlet(new ServletHolder(new TwitterServlet()),"/*");
+		
 		
 		
 
