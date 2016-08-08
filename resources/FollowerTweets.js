@@ -32,7 +32,9 @@ console.log(" FollowerTweets:  in loadDoc() ")
     var key, value;
 	
 
-	var tweets = myObject["userData"];
+//	var tweets = myObject["userData"];
+tweets = myObject;
+
 	console.log("tweets:  " + tweets);	
 	
 	var tweetDate  = "";
@@ -50,9 +52,12 @@ console.log(" FollowerTweets:  in loadDoc() ")
     for (key in tweets){
     	if(tweets.hasOwnProperty(key)){
              value = tweets[key];
-			 tweetDate = value["date"] ;
-             follower = value["name"]
-             tweetData = value["tweet"];
+//			 tweetDate = value["date"] ;
+//             follower = value["name"]
+//             tweetData = value["tweet"];
+			 tweetDate = value["hitTime"] ;
+             follower = value["userId"]
+             tweetData = value["message"];
 			
     		}
 console.log("key:" + key +   "   value:  " + value + "  tweetDate:  " +  tweetDate + "  follower: " + follower + "  tweetData:  " + tweetData);			
@@ -86,7 +91,8 @@ tweetDataCell.innerHTML = tweetData ;
 
 console.log("file to open:  " + dataFile);
 //xhttp.open("GET",  dataFile, true);
-xhttp.open("GET",  "twitterFollowerData.json", true);
+//xhttp.open("GET",  "twitterFollowerData.json", true);
+xhttp.open("GET",  "http://localhost:8090/servlet/tweets.do", true);
   xhttp.send();
 }
 
