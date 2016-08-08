@@ -3,6 +3,10 @@ package bootcamp.twitter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
 
 public class LoginServlet extends HttpServlet
 {
@@ -34,14 +40,17 @@ public class LoginServlet extends HttpServlet
           System.exit(0);
         }
         
-        JSONObject obj = new JSONObject();
+        Map obj = new HashMap();
         obj.put("message", "database opened!");
         obj.put("class", getClass().getName());
         obj.put("session", request.getSession(true).getId());
         
-        JSONArray list = new JSONArray();
+        List list = new ArrayList();
         list.add(obj);
         
-        response.getWriter().print(list.toJSONString());
+        Gson gson = new Gson();
+		String json = gson.toJson(list);
+        
+        response.getWriter().print(json);
     }
 }

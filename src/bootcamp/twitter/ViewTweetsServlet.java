@@ -18,12 +18,9 @@ public class ViewTweetsServlet extends HttpServlet
 {
     
 	private static final long serialVersionUID = 1L;
-	private String greeting="Twitter Clone!";
     public ViewTweetsServlet(){}
-    public ViewTweetsServlet(String greeting)
-    {
-        this.greeting=greeting;
-    }
+    
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String query = request.getQueryString();
