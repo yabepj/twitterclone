@@ -1,4 +1,5 @@
-var serviceLoc =  "http://localhost:8090/bootcamp/twittermessage.json";
+var serviceLoc = "http://localhost:8090/servlet/tweets.do";
+	// "http://localhost:8090/bootcamp/twittermessage.json";
 
 /*
 // create data object to contain form data
@@ -65,6 +66,10 @@ function loadText(txtTwitter,addressbook)
 		var textval=new Array();
 		var txtTwitter = document.getElementById("idtxtTwitter").value;  
 		var currentdate = new Date().toGMTString();
+		
+		
+		var updateUrl = url + '?user=user1&message="' + txtTwitter + '"'; //hard coded user
+		
 		var xhttp = new XMLHttpRequest();
     		xhttp.onreadystatechange = function() {
                    if( xhttp.readyState === 4 &&
@@ -89,32 +94,12 @@ function loadText(txtTwitter,addressbook)
 									
 									
 								
-								if (txtTwitter === content[i].Textname)
-								{
-									//alert("1");
-								//txtArr.push( txtTwitter.value );
-								//alert(txtArr.length);
-								
-									 txt.setAttribute("cols", 50);
-									 txt.setAttribute("rows", 3);
-									//txt.setAttribute("value",txtTwitter+"  "+currentdate);
-									 txt.setAttribute("id","txtid");
-									 
-									 txt.innerHTML=content[i].Textname+"  "+currentdate;
-									 div1.appendChild(txt);
-									 
-									 div1.setAttribute("class","jo");
-									 //content.sort( predicatBy("id") );
-									 document.getElementById("content").appendChild(div1);
-									 break;
-								}else
-								{
 										 //alert("2");
 									 txt.setAttribute("cols", 50);
 									 txt.setAttribute("rows", 3);
 									//txt.setAttribute("value",txtTwitter+"  "+currentdate);
 									 txt.setAttribute("id","txtid");
-									 txt.innerHTML=content[i].Textname+"  "+currentdate;
+									 txt.innerHTML=content[i].message+"  "+currentdate;
 									 div1.appendChild(txt);
 									 
 									 div1.setAttribute("class","jo");
@@ -122,7 +107,7 @@ function loadText(txtTwitter,addressbook)
 									 document.getElementById("content").appendChild(div1);
 									 }
 									// content.sort(SortByID).reverse();
-								}
+								
 							
 					
 						}
@@ -136,7 +121,7 @@ function SortByID(x,y) {
 
 					
 					 
-			xhttp.open("GET", url ,true);
+			xhttp.open("GET", updateUrl ,true);
     		xhttp.send();
 					
 }

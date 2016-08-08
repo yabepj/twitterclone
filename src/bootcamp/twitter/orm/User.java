@@ -11,10 +11,19 @@ public class User {
 	int id;
 	@DatabaseField
     private String username;
+	@DatabaseField
+    private String fullname;
     @DatabaseField
     private String password;
     @DatabaseField
     private String avatar;
+    @DatabaseField
+    private String profile;
+
+	
+
+
+
 
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -79,6 +88,16 @@ public class User {
 		return id;
 	}
 
+	public String getProfile() {
+		return profile;
+	}
+
+
+
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 
 	@Override
 	public String toString() {

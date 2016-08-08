@@ -32,6 +32,12 @@ public class ViewTweetsServlet extends HttpServlet
         Map map = new HashMap();
         map.put("user", request.getParameter("user"));
         
+        String message = request.getParameter("message");
+        if( message != null )
+             {
+        	 map.put("message", message);
+        	 view.add(map);
+        	 }        
         List<Object> result =  view.execute(map);       
         
         Gson gson = new Gson();
