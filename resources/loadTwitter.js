@@ -1,5 +1,6 @@
-var serviceLoc =  "http://localhost:8090/bootcamp/";
+var serviceLoc =  "http://localhost:8090/bootcamp/twittermessage.json";
 
+/*
 // create data object to contain form data
 function AddressBookEntry(name,currentdate) {
     this.name = name;
@@ -15,10 +16,11 @@ function go(){
     document.getElementById("submit").onclick = function() {
         // get values from each form field
         var name = document.getElementById("idtxtTwitter").value;
-       
+       var currentdate = new Date().toGMTString();
 
         // create new object using consturctor
-        var newAddress = new AddressBookEntry(name);
+        var newAddress = new AddressBookEntry(name,currentdate);
+		
         //var jAddress = JSON.stringify(newAddress);
 
         // push new object into array
@@ -35,7 +37,7 @@ function go(){
 		var newloadtext = new loadText(name,addressBook);
         return true;
     }
-}
+}*/
  /*function saveDataInLS(){
     var obj={};
         obj.name=document.getElementById('idtxtTwitter').value;
@@ -61,38 +63,80 @@ function loadText(txtTwitter,addressbook)
 	    var xhttp;
 		var url = serviceLoc;
 		var textval=new Array();
-		//var txtTwitter = document.getElementById("idtxtTwitter").value;  
-		
+		var txtTwitter = document.getElementById("idtxtTwitter").value;  
+		var currentdate = new Date().toGMTString();
 		var xhttp = new XMLHttpRequest();
     		xhttp.onreadystatechange = function() {
                    if( xhttp.readyState === 4 &&
 						xhttp.status === 200){
+							
+							var json = xhttp.responseText;
+							var myimgs= document.getElementById("content");
+									  var last;
+									  while(last= myimgs.lastChild){
+									  myimgs.removeChild(last);
+									  }
+
+							console.log(json);
+							var content = JSON.parse(json);
+							//alert(content.length);
+							for (i = 0; i < content.length; i++)
+								{
+								  var txtArr   = [];
+									var txt = document.createElement('TEXTAREA');
+									var table = document.createElement('table');
+									var div1 = document.createElement('div');
+									
+									
+								
+								if (txtTwitter === content[i].Textname)
+								{
+									//alert("1");
+								//txtArr.push( txtTwitter.value );
+								//alert(txtArr.length);
+								
+									 txt.setAttribute("cols", 50);
+									 txt.setAttribute("rows", 3);
+									//txt.setAttribute("value",txtTwitter+"  "+currentdate);
+									 txt.setAttribute("id","txtid");
+									 
+									 txt.innerHTML=content[i].Textname+"  "+currentdate;
+									 div1.appendChild(txt);
+									 
+									 div1.setAttribute("class","jo");
+									 //content.sort( predicatBy("id") );
+									 document.getElementById("content").appendChild(div1);
+									 break;
+								}else
+								{
+										 //alert("2");
+									 txt.setAttribute("cols", 50);
+									 txt.setAttribute("rows", 3);
+									//txt.setAttribute("value",txtTwitter+"  "+currentdate);
+									 txt.setAttribute("id","txtid");
+									 txt.innerHTML=content[i].Textname+"  "+currentdate;
+									 div1.appendChild(txt);
+									 
+									 div1.setAttribute("class","jo");
+									
+									 document.getElementById("content").appendChild(div1);
+									 }
+									// content.sort(SortByID).reverse();
+								}
+							
+					
 						}
-			}
+			};
 		
-					var currentdate = new Date().toGMTString();
-					//alert(currentdate);
-					var txtArr   = [];
-					var txt = document.createElement('TEXTAREA');
-					var table = document.createElement('table');
-					var div1 = document.createElement('div');
+function SortByID(x,y) {
+      return x.ID - y.ID; 
+    }
+
+//Usage
+
 					
-					
-				//txtArr.push( txtTwitter.value );
-				//alert(txtArr.length);
-				
-					 txt.setAttribute("cols", 50);
-					 txt.setAttribute("rows", 3);
-					//txt.setAttribute("value",txtTwitter+"  "+currentdate);
-					 txt.setAttribute("id","txtid");
-					 txt.innerHTML=txtTwitter+"  "+currentdate;
-					 div1.appendChild(txt);
 					 
-					 div1.setAttribute("class","jo");
-					 
-					 document.getElementById("content").appendChild(div1);
-					 
-			xhttp.open("GET", addressbook ,true);
+			xhttp.open("GET", url ,true);
     		xhttp.send();
 					
 }
