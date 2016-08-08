@@ -1,0 +1,72 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Sign On</title>
+
+    <!-- Bootstrap -->
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="./dist/css/bootstrap.css" >
+
+    <!-- Optional theme -->
+	<link rel="stylesheet" href="./dist/css/bootstrap-theme.css" >
+    <link href="./dist/css/lightbox.css" rel="stylesheet">
+
+  <link href="./dist/css/bootstrap-material-design.css" rel="stylesheet">
+  <link href="./dist/css/ripples.min.css" rel="stylesheet">
+
+
+  </head>
+
+  <body>
+
+
+
+    <div class="container">
+
+       <h1>Enter Credentials</h1>
+
+    <form class="navbar-form navbar-left" role="signon" method="get" action="/servlet/login.do">
+    <div class="form-group">
+	<div class="input-group">
+	  <span class="input-group-addon" id="sizing-addon2">User Name</span>
+	  <input type="text" class="form-control" placeholder="user" name="user" aria-describedby="sizing-addon2">
+	</div>
+	
+	<div class="input-group">
+	  <span class="input-group-addon" id="sizing-addon2">Password</span>
+	  <input type="password" class="form-control" placeholder="Password" aria-describedby="sizing-addon2">
+	</div>
+	</div>
+	<button type="button" class="btn btn-default"  onclick="javascript:submit()">
+	  <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Log In
+	</button>
+	</form>
+   
+    
+    <div class="container" id="users" ></div>
+    
+	<script type="text/javascript" src="viewUsers.js" ></script>
+ 
+    <div id="success" class="alert alert-success hide" role="alert">Well Done!</div>
+		
+
+
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+	<script src="./dist/js/bootstrap.js"></script>
+
+  </body>
+</html>

@@ -8,9 +8,11 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -38,22 +40,33 @@ public class TwitterServer extends AbstractHandler {
 		resourceHandler.setDirectoriesListed(true);
 
 		// 4.Setting Context Source
-		ContextHandler contextHandler = new ContextHandler("/bootcamp");
+		ContextHandler resourceContext = new ContextHandler("/bootcamp");
 
 		// 5.Attaching Handlers
-		contextHandler.setHandler(resourceHandler);
+		resourceContext.setHandler(resourceHandler);
 		
-		server.setHandler(contextHandler);
-		
-		
-		
-//		 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-//	     context.setContextPath("/servlet");
-//	     server.setHandler(context);
-//	 
-//	     context.addServlet(new ServletHolder(new TwitterServlet()),"/*");
+		//server.setHandler(contextHandler);
 		
 		
+		
+		 ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
+	     servletContext.setContextPath("/servlet");
+	     server.setHandler(servletContext);
+	 
+	     servletContext.addServlet(new ServletHolder(new TwitterServlet()),"/main.do");
+	     servletContext.addServlet(new ServletHolder(new LoginServlet()),"/login.do");
+	     servletContext.addServlet(new ServletHolder(new ViewFollowersServlet()),"/followers.do");
+	     servletContext.addServlet(new ServletHolder(new ViewNewsFeedServlet()),"/news.do");
+	     servletContext.addServlet(new ServletHolder(new ViewTweetsServlet()),"/tweets.do");
+	     servletContext.addServlet(new ServletHolder(new ViewUsersServlet()),"/users.do");
+	     servletContext.addServlet(new ServletHolder(new UpdateUserServlet()),"/updateUser.do");
+	     servletContext.addServlet(new ServletHolder(new UpdateUserServlet()),"/updateTweet.do");
+				
+	     
+	     HandlerCollection handlerCollection = new HandlerCollection();
+	     handlerCollection.setHandlers(new Handler[] {servletContext, resourceContext});
+	     		
+	     server.setHandler(handlerCollection);
 		
 
 		server.start();
