@@ -57,8 +57,10 @@ function go(){
     //[{"name":"Anand","phone":"6546456456"}{"name":"Andy","phone":"78688"}]
 }*/
 
+loadText();
 
-function loadText(txtTwitter,addressbook)
+
+function loadText()
 {
 	//alert(txtTwitter);
 	    var xhttp;
