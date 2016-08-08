@@ -1,5 +1,6 @@
 package bootcamp.twitter.orm;
 
+import com.google.gson.Gson;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -57,4 +58,10 @@ public class Follower {
 		this.user2 = user2;
 	}
 
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		String json = gson.toJson(this);  
+		return json;
+	}
 }

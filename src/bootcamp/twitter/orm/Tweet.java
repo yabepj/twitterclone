@@ -3,6 +3,7 @@ package bootcamp.twitter.orm;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import com.google.gson.Gson;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -59,5 +60,11 @@ public class Tweet {
 		this.hitTime = hitTime;
 	}
 	
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		String json = gson.toJson(this);  
+		return json;
+	}
 	
 }

@@ -1,30 +1,24 @@
 package bootcamp.twitter;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.Gson;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.support.ConnectionSource;
-
-import bootcamp.twitter.orm.Follower;
-import bootcamp.twitter.orm.Tweet;
-import bootcamp.twitter.orm.User;
+import bootcamp.twitter.facade.ViewTweets;
 
 public class ViewTweetsServlet extends HttpServlet
 {
-    private String greeting="Twitter Clone!";
+    
+	private static final long serialVersionUID = 1L;
+	private String greeting="Twitter Clone!";
     public ViewTweetsServlet(){}
     public ViewTweetsServlet(String greeting)
     {
@@ -32,54 +26,20 @@ public class ViewTweetsServlet extends HttpServlet
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+    	String query = request.getQueryString();
+    	
     	response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
       
-        ConnectionSource  connectionSource;
-    	Dao<User, Integer> userDao; 
-    	Dao<Follower, Integer> followerDao; 
-    	Dao<Tweet, Integer> tweetDao = null;
+        ViewTweets view = new ViewTweets();
+        Map map = new HashMap();
+        map.put("user", request.getParameter("user"));
         
-        try {
-			connectionSource =
-					  new JdbcConnectionSource("jdbc:sqlite:test.db");
-			
-			userDao = 
-					  DaoManager.createDao(connectionSource, User.class);
-			followerDao = 
-					  DaoManager.createDao(connectionSource, Follower.class);
-			tweetDao = 
-					  DaoManager.createDao(connectionSource, Tweet.class);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-		
-	
-        JSONObject obj = new JSONObject();
-        obj.put("message", "database opened!");
-        obj.put("class", getClass().getName());
-        obj.put("session", request.getSession(true).getId());
+        List<Object> result =  view.execute(map);       
         
+        Gson gson = new Gson();
+		String json = gson.toJson(result);  
         
-        JSONArray list = new JSONArray();
-        list.add(obj);
-        
-        for (Tweet tweet: tweetDao) {
-        	 JSONObject o = new JSONObject();
-        	 o.put("id", tweet.getId());
-        	 o.put("time", tweet.getHitTime());
-        	 o.put("message", tweet.getMessage());
-        	 o.put("user", tweet.getUserId());
-
-        	 
-        	 list.add(o);
-		}
-        
-        
-        
-        
-        response.getWriter().print(list.toJSONString());
+        response.getWriter().print(json);
     }
 }

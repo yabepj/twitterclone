@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -68,6 +69,13 @@ public class TestOrm {
 		Follower follower= new Follower(0, 1);
 		
 		followerDao.create(follower);
+	}
+	
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		String json = gson.toJson(this);  
+		return json;
 	}
 
 }
